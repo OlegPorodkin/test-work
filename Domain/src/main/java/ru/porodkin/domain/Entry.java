@@ -1,4 +1,4 @@
-package ru.porodkin;
+package ru.porodkin.domain;
 
 import java.util.Objects;
 

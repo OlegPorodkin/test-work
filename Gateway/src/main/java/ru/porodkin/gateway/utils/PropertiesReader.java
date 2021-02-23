@@ -1,4 +1,4 @@
-package ru.porodkin.utils;
+package ru.porodkin.gateway.utils;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;

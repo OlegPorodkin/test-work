@@ -1,6 +1,9 @@
-package ru.porodkin;
+package ru.porodkin.gateway;
 
-import ru.porodkin.postgresql.PostgreFieldDao;
+import ru.porodkin.EntryConverterXml;
+import ru.porodkin.EntryInputFromXml;
+import ru.porodkin.EntryPresenterToXml;
+import ru.porodkin.storage.postgresql.PostgreFieldDao;
 import ru.porodkin.usecase.EntryConversion;
 import ru.porodkin.usecase.EntryCreator;
 import ru.porodkin.usecase.EntryMarshalling;
@@ -9,7 +12,7 @@ import ru.porodkin.usecase.port.EntryConverter;
 import ru.porodkin.usecase.port.EntryDao;
 import ru.porodkin.usecase.port.EntryInput;
 import ru.porodkin.usecase.port.EntryPresenter;
-import ru.porodkin.utils.PropertiesReader;
+import ru.porodkin.gateway.utils.PropertiesReader;
 
 public final class ManualConfig {
 
@@ -28,7 +31,7 @@ public final class ManualConfig {
 
     private final EntryPresenter entryPresenter = new EntryPresenterToXml();
 
-    private final EntryInput entryInput = new EntryInputFromXml(xmlPathTwo);
+    private final EntryInput entryInput = new EntryInputFromXml();
 
     public EntryConversion entryConversion(){
         return new EntryConversion(entryConverter);
@@ -39,11 +42,11 @@ public final class ManualConfig {
     }
 
     public EntryMarshalling entryMarshalling(){
-        return new EntryMarshalling(entryPresenter, entryDao);
+        return new EntryMarshalling(entryPresenter, entryDao, xmlPathOne);
     }
 
     public EntrySummator entryInput(){
-        return new EntrySummator(entryInput);
+        return new EntrySummator(entryInput, xmlPathTwo);
     }
 
 }

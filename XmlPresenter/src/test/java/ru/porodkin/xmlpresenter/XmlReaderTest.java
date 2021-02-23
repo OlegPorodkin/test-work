@@ -1,4 +1,4 @@
-package ru.porodkin.service;
+package ru.porodkin.xmlpresenter;
 
 import org.junit.jupiter.api.Test;
 

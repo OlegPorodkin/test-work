@@ -2,7 +2,7 @@ package ru.porodkin;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.porodkin.service.XmlConverter;
+import ru.porodkin.xmlpresenter.XmlConverter;
 import ru.porodkin.usecase.port.EntryConverter;
 
 public class EntryConverterXml implements EntryConverter {
@@ -21,10 +21,10 @@ public class EntryConverterXml implements EntryConverter {
 
     @Override
     public boolean convert() {
-        LOG.info("Prepare converting xml document...");
-        converter.convert(sourceFrom, sourceTo, xslSchema);
-        LOG.info("Converting complete.");
+        LOG.debug("Prepare converting xml document...");
+        boolean convert = converter.convert(sourceFrom, sourceTo, xslSchema);
+        LOG.debug("Converting complete.");
 
-        return true;
+        return convert;
     }
 }

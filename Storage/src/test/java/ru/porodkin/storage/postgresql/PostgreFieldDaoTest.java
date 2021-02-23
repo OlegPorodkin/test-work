@@ -1,7 +1,7 @@
-package ru.porodkin.postgresql;
+package ru.porodkin.storage.postgresql;
 
 import org.junit.jupiter.api.Test;
-import ru.porodkin.Entry;
+import ru.porodkin.domain.Entry;
 
 import java.util.ArrayList;
 import java.util.Collection;

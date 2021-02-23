@@ -1,4 +1,4 @@
-package ru.porodkin.service;
+package ru.porodkin.xmlpresenter;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,8 +12,7 @@ public class XmlConverter {
 
     public static final Logger LOG = LoggerFactory.getLogger(XmlConverter.class);
 
-
-    public void convert(String from, String to, String xsl) {
+    public boolean convert(String from, String to, String xsl) {
         try {
 
             TransformerFactory factory = TransformerFactory.newInstance();
@@ -27,10 +26,13 @@ public class XmlConverter {
 
             trf.transform(xml, new StreamResult(new File(to)));
 
+            return true;
         } catch (TransformerConfigurationException e) {
-            e.printStackTrace();
+            LOG.error("Something wrong when create transformer", e);
+            return false;
         } catch (TransformerException e) {
-            e.printStackTrace();
+            LOG.error("Something wrong when transformation", e);
+            return false;
         }
     }
 }

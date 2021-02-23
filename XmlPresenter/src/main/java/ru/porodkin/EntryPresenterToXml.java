@@ -2,7 +2,8 @@ package ru.porodkin;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.porodkin.service.XmlWriter;
+import ru.porodkin.domain.Entry;
+import ru.porodkin.xmlpresenter.XmlWriter;
 import ru.porodkin.usecase.port.EntryPresenter;
 
 import java.util.Collection;
@@ -13,9 +14,12 @@ public class EntryPresenterToXml implements EntryPresenter {
     private final XmlWriter writer = new XmlWriter();
 
     @Override
-    public void present(Collection<Entry> entries) {
-        LOG.info("Prepare to marshaling entries...");
-        writer.create(entries);
-        LOG.info("Marshaling complete.");
+    public boolean present(Collection<Entry> entries, String to) {
+
+        if (LOG.isDebugEnabled()) LOG.debug("Prepare to marshaling entries...");
+        boolean result = writer.create(entries, to);
+        if (LOG.isDebugEnabled()) LOG.debug("Marshaling complete.");
+
+        return result;
     }
 }

@@ -2,6 +2,8 @@ package ru.porodkin;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ru.porodkin.domain.Entry;
+import ru.porodkin.gateway.ManualConfig;
 import ru.porodkin.usecase.EntryConversion;
 import ru.porodkin.usecase.EntryCreator;
 import ru.porodkin.usecase.EntryMarshalling;
@@ -30,7 +32,14 @@ public class MainApplication {
 
         List<Entry> entries = new ArrayList<>();
 
-        for (int i = 1; i <= 1_000_000; i++) {
+        int count = 1_000_000;
+
+        if (args[0] != null) {
+            LOG.debug("uses the default value of the quantity entry to write to the database");
+            count = Integer.parseInt(args[0]);
+        }
+
+        for (int i = 1; i <= count; i++) {
             Entry e = new Entry();
             e.setField(i);
             entries.add(e);
@@ -38,8 +47,11 @@ public class MainApplication {
 
         entryCreator.createEntries(entries);
         LOG.info("Saving entries to DB complete.");
-        entryMarshalling.convertToXml();
-        LOG.info("Convert entry from DB to xml complete.");
+        if(entryMarshalling.convertToXml()){
+            LOG.info("Convert entry from DB to xml complete.");
+        }else {
+            LOG.info("Convert entry from DB to xml failed");
+        }
         entryConversion.convert();
         LOG.info("Convert by xslt complete.");
         Long sum = entrySummator.getAllEntryValueSum();

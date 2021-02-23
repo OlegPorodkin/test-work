@@ -1,8 +1,8 @@
-package ru.porodkin.service;
+package ru.porodkin.xmlpresenter;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.porodkin.Entry;
+import ru.porodkin.domain.Entry;
 
 import javax.xml.namespace.QName;
 import javax.xml.stream.XMLEventReader;
@@ -38,17 +38,18 @@ public class XmlReader {
                         Entry ent = new Entry();
                         ent.setField(Integer.parseInt(field));
                         entries.add(ent);
+                        if (LOG.isDebugEnabled()) LOG.debug("Add {} to entries collection", ent);
                     }
 
                 }
             }
 
-            LOG.debug("Entry from {} count of fields = {}", from, entries.size());
+            if (LOG.isDebugEnabled()) LOG.debug("Entry from {} count of fields = {}", from, entries.size());
 
         } catch (XMLStreamException e) {
-            e.printStackTrace();
+            LOG.error("Something wrong when XMLEventReader get InputStream from {}", from);
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            LOG.error("Not found {}", from);
         }
         return entries;
     }

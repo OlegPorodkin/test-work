@@ -1,4 +1,4 @@
-package ru.porodkin.postgresql.connection;
+package ru.porodkin.storage.postgresql.connection;
 
 import java.sql.Connection;
 import java.sql.SQLException;

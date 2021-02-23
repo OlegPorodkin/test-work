@@ -1,8 +1,10 @@
-package ru.porodkin.service;
+package ru.porodkin.xmlpresenter;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import ru.porodkin.Entry;
+import ru.porodkin.domain.Entry;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -16,9 +18,10 @@ import java.util.Collection;
 
 public class XmlWriter {
 
-    public void create(Collection<Entry> entries){
-        try {
+    private static final Logger LOG = LoggerFactory.getLogger(XmlWriter.class);
 
+    public boolean create(Collection<Entry> entries, String toXmlFile){
+        try {
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
             DocumentBuilder db = dbf.newDocumentBuilder();
             Document doc = db.newDocument();
@@ -39,19 +42,24 @@ public class XmlWriter {
             trf.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
             trf.setOutputProperty(OutputKeys.INDENT, "yes");
 
-            FileOutputStream fos = new FileOutputStream("1.xml");
+            FileOutputStream fos = new FileOutputStream(toXmlFile);
 
             StreamResult result = new StreamResult(fos);
             trf.transform(src, result);
-
+            if (LOG.isDebugEnabled()) LOG.debug("xml created...");
+            return true;
         } catch (ParserConfigurationException e) {
-            e.printStackTrace();
+            LOG.error("Something happened during the parser configuration", e);
+            return true;
         } catch (TransformerConfigurationException e) {
-            e.printStackTrace();
+            LOG.error("Something happened during the transformation configuration", e);
+            return true;
         } catch (TransformerException e) {
-            e.printStackTrace();
+            LOG.error("Something happened during the transformation", e);
+            return true;
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            LOG.error("{} file exists but is a directory rather than a regular file, does not exist but cannot be created, or cannot be opened for any other reason", toXmlFile, e);
+            return true;
         }
     }
 }

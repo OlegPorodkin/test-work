@@ -1,9 +1,9 @@
-package ru.porodkin.postgresql;
+package ru.porodkin.storage.postgresql;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.porodkin.Entry;
-import ru.porodkin.postgresql.connection.PostgreConnection;
+import ru.porodkin.domain.Entry;
+import ru.porodkin.storage.postgresql.connection.PostgreConnection;
 import ru.porodkin.usecase.port.EntryDao;
 
 import java.sql.*;
@@ -27,16 +27,23 @@ public class PostgreFieldDao implements EntryDao {
 
     @Override
     public int saveEntries(Collection<Entry> entries) {
+
+        if (entries == null) throw new NullPointerException("Entries collection is null");
+
         try (Connection conn = postgreCoon.getConnection();
              PreparedStatement ps = conn.prepareStatement(INSERT_SQL)) {
 
             conn.setAutoCommit(false);
 
-            LOG.info("Starting insert to DB {} field", entries.size());
+            if (LOG.isDebugEnabled()) LOG.debug("Starting insert to DB {} field", entries.size());
 
             clearTable();
 
             for (Entry entry : entries) {
+                if (entry == null) {
+                    conn.rollback();
+                    throw new NullPointerException("Entry in collection is null");
+                }
                 ps.setInt(1, entry.getField());
                 ps.addBatch();
             }
@@ -44,7 +51,7 @@ public class PostgreFieldDao implements EntryDao {
             int[] result = ps.executeBatch();
             conn.commit();
 
-            LOG.info("Insert FIELDS into DB successful");
+            if (LOG.isDebugEnabled()) LOG.debug("Insert FIELDS into DB successful");
             return result.length;
 
         } catch (SQLException ex) {
@@ -87,7 +94,7 @@ public class PostgreFieldDao implements EntryDao {
             if (LOG.isDebugEnabled()) LOG.debug("Truncate table complete...");
 
             conn.commit();
-            LOG.info("Table truncate complete.");
+            if (LOG.isDebugEnabled()) LOG.debug("Table truncate complete.");
         } catch (SQLException ex) {
             LOG.error("When truncate table happened exception:", ex);
         }
