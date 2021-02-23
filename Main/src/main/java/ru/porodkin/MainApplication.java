@@ -11,12 +11,15 @@ import ru.porodkin.usecase.EntrySummator;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 
 public class MainApplication {
 
     public static final Logger LOG = LoggerFactory.getLogger(MainApplication.class);
 
     public static void main(String[] args) {
+
+        //region Инициализация конфигурации приложения
         LOG.info("Application staring...");
         ManualConfig config = new ManualConfig();
         LOG.info("config init...");
@@ -29,7 +32,10 @@ public class MainApplication {
         EntrySummator entrySummator = config.entryInput();
         LOG.info("entry summator init...");
         LOG.info("Application start.");
+        //endregion
 
+
+        //region Подготовка данных для теситования
         List<Entry> entries = new ArrayList<>();
 
         int count = 1_000_000;
@@ -40,18 +46,23 @@ public class MainApplication {
             LOG.info("uses the default value of the quantity entry to write to the database");
         }
 
-        for (int i = 1; i <= count; i++) {
-            Entry e = new Entry();
-            e.setField(i);
-            entries.add(e);
-        }
+        IntStream
+                .rangeClosed(1, count)
+                .forEachOrdered(i -> {
+                    Entry e = new Entry();
+                    e.setField(i);
+                    entries.add(e);
+                });
+        //endregion
 
+
+        //region Основная бизнес логика
         entryCreator.createEntries(entries);
         LOG.info("Saving entries to DB complete.");
-        if(entryMarshalling.convertToXml()){
+        if (entryMarshalling.convertToXml()) {
             LOG.info("Convert entry from DB to xml complete.");
 
-            if (entryConversion.convert()){
+            if (entryConversion.convert()) {
                 LOG.info("Convert by xslt complete.");
 
                 Long sum = entrySummator.getAllEntryValueSum();
@@ -59,9 +70,10 @@ public class MainApplication {
             } else {
                 LOG.warn("Converting by xslt failed");
             }
-        }else {
+        } else {
             LOG.warn("Convert entry from DB to xml failed");
         }
+        //endregion
 
         LOG.info("Application stop.");
 
