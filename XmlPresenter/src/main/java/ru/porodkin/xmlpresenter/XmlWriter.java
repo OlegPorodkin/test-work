@@ -50,16 +50,16 @@ public class XmlWriter {
             return true;
         } catch (ParserConfigurationException e) {
             LOG.error("Something happened during the parser configuration", e);
-            return true;
+            return false;
         } catch (TransformerConfigurationException e) {
             LOG.error("Something happened during the transformation configuration", e);
-            return true;
+            return false;
         } catch (TransformerException e) {
             LOG.error("Something happened during the transformation", e);
-            return true;
+            return false;
         } catch (FileNotFoundException e) {
             LOG.error("{} file exists but is a directory rather than a regular file, does not exist but cannot be created, or cannot be opened for any other reason", toXmlFile, e);
-            return true;
+            return false;
         }
     }
 }

@@ -32,7 +32,7 @@ public class PostgreConnection extends AbstractConnection{
         Connection connection = null;
 
         try {
-            connection = DriverManager.getConnection("jdbc:postgresql:"+url, login, password);
+            connection = DriverManager.getConnection(url, login, password);
         } catch (SQLException ex) {
             LOG.error("Something wrong when try connect to DB {}. Please check credentials or internet connections.", url);
             throw new SQLException(ex);

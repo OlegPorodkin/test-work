@@ -28,10 +28,10 @@ public class XmlConverter {
 
             return true;
         } catch (TransformerConfigurationException e) {
-            LOG.error("Something wrong when create transformer", e);
+            LOG.error("Something wrong when create transformer. Please check xsl schema", e);
             return false;
         } catch (TransformerException e) {
-            LOG.error("Something wrong when transformation", e);
+            LOG.error("Something wrong when transformation. Please check source or destination file", e);
             return false;
         }
     }

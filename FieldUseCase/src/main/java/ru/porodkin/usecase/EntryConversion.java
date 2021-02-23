@@ -14,9 +14,10 @@ public class EntryConversion {
         this.converter = converter;
     }
 
-    public void convert(){
-        LOG.info("Preparing for conversion ...");
-        converter.convert();
-        LOG.info("Conversion complete.");
+    public boolean convert(){
+        if (LOG.isDebugEnabled()) LOG.debug("Preparing for conversion ...");
+        boolean convert = converter.convert();
+        if (LOG.isDebugEnabled() && convert) LOG.debug("Conversion complete.");
+        return convert;
     }
 }

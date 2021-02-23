@@ -25,4 +25,11 @@ public class Entry {
     public int hashCode() {
         return Objects.hash(field);
     }
+
+    @Override
+    public String toString() {
+        return "Entry{" +
+                "field=" + field +
+                '}';
+    }
 }

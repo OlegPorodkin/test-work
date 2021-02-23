@@ -69,7 +69,7 @@ public class PostgreFieldDao implements EntryDao {
 
             ResultSet rs = ps.executeQuery();
 
-            if (LOG.isDebugEnabled()) LOG.debug("Get from DB {} entries",rs.getFetchSize());
+            if (LOG.isDebugEnabled()) LOG.debug("Get all entry from DB entries");
             while (rs.next()){
                 Entry entry = new Entry();
                 int anInt = rs.getInt(1);

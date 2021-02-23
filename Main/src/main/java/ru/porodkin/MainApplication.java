@@ -35,8 +35,9 @@ public class MainApplication {
         int count = 1_000_000;
 
         if (args[0] != null) {
-            LOG.debug("uses the default value of the quantity entry to write to the database");
             count = Integer.parseInt(args[0]);
+        } else {
+            if (LOG.isDebugEnabled()) LOG.debug("uses the default value of the quantity entry to write to the database");
         }
 
         for (int i = 1; i <= count; i++) {
@@ -49,14 +50,20 @@ public class MainApplication {
         LOG.info("Saving entries to DB complete.");
         if(entryMarshalling.convertToXml()){
             LOG.info("Convert entry from DB to xml complete.");
+
+            if (entryConversion.convert()){
+                LOG.info("Convert by xslt complete.");
+
+                Long sum = entrySummator.getAllEntryValueSum();
+                LOG.info("Sum of all entry = {}.", sum);
+            } else {
+                LOG.warn("Converting by xslt failed");
+            }
         }else {
-            LOG.info("Convert entry from DB to xml failed");
+            LOG.warn("Convert entry from DB to xml failed");
         }
-        entryConversion.convert();
-        LOG.info("Convert by xslt complete.");
-        Long sum = entrySummator.getAllEntryValueSum();
-        LOG.info("Sum of all entry = {}.", sum);
 
         LOG.info("Application stop.");
+
     }
 }

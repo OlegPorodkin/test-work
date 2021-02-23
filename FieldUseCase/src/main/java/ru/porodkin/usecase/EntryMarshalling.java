@@ -31,6 +31,6 @@ public class EntryMarshalling {
         if (LOG.isDebugEnabled()) LOG.debug("Prepare to marshalling {} entries", allEntries.size());
         boolean present = presenter.present(allEntries, xml);
         if (LOG.isDebugEnabled() && present) LOG.debug("Marshaling complete to {}.", xml);
-        return false;
+        return present;
     }
 }

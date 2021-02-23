@@ -18,7 +18,11 @@ public class EntryPresenterToXml implements EntryPresenter {
 
         if (LOG.isDebugEnabled()) LOG.debug("Prepare to marshaling entries...");
         boolean result = writer.create(entries, to);
-        if (LOG.isDebugEnabled()) LOG.debug("Marshaling complete.");
+        if (LOG.isDebugEnabled() && result){
+            LOG.debug("Marshaling complete.");
+        } else {
+            LOG.debug("Marshaling failed");
+        }
 
         return result;
     }

@@ -29,7 +29,7 @@ public class EntryCreator {
             return;
         }
 
-        LOG.info("Saving {} entities...", entries.size());
+        if(LOG.isDebugEnabled()) LOG.debug("Saving {} entities...", entries.size());
         int count = 0;
         try {
             count = entryRepo.saveEntries(entries);
@@ -37,6 +37,6 @@ public class EntryCreator {
             LOG.error("Collection of entry or collection contains one or more null elements");
             throw new NullPointerException(e.getMessage());
         }
-        LOG.info("Saving {} entries complete.", count);
+        if(LOG.isDebugEnabled()) LOG.debug("Saving {} entries complete.", count);
     }
 }

@@ -38,7 +38,7 @@ public class XmlReader {
                         Entry ent = new Entry();
                         ent.setField(Integer.parseInt(field));
                         entries.add(ent);
-                        if (LOG.isDebugEnabled()) LOG.debug("Add {} to entries collection", ent);
+                        if (LOG.isTraceEnabled()) LOG.trace("Add {} to entries collection", ent);
                     }
 
                 }
