@@ -13,9 +13,6 @@ import ru.porodkin.utils.PropertiesReader;
 
 public final class ManualConfig {
 
-    public ManualConfig() {
-    }
-
     private final String urlJDBC = PropertiesReader.loadProperties("urlJDBC");
     private final String loginJDBC = PropertiesReader.loadProperties("loginJDBC");
     private final String passJDBC = PropertiesReader.loadProperties("passJDBC");
@@ -32,6 +29,7 @@ public final class ManualConfig {
     private final EntryPresenter entryPresenter = new EntryPresenterToXml();
 
     private final EntryInput entryInput = new EntryInputFromXml(xmlPathTwo);
+
     public EntryConversion entryConversion(){
         return new EntryConversion(entryConverter);
     }

@@ -17,10 +17,15 @@ public class MainApplication {
     public static void main(String[] args) {
         LOG.info("Application staring...");
         ManualConfig config = new ManualConfig();
+        LOG.info("config init...");
         EntryCreator entryCreator = config.entryCreator();
+        LOG.info("entry creator init...");
         EntryConversion entryConversion = config.entryConversion();
+        LOG.info("entry converter init...");
         EntryMarshalling entryMarshalling = config.entryMarshalling();
+        LOG.info("entry marshalling init...");
         EntrySummator entrySummator = config.entryInput();
+        LOG.info("entry summator init...");
         LOG.info("Application start.");
 
         List<Entry> entries = new ArrayList<>();

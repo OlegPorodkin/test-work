@@ -21,8 +21,8 @@
     <dependencies>
         <!--Logging-->
         <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
         </dependency>
 
         <!--Testing-->
@@ -41,6 +41,12 @@
             <groupId>ru.porodkin</groupId>
             <artifactId>domain</artifactId>
             <version>${domain.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>RELEASE</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 

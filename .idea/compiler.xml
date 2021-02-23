@@ -17,8 +17,5 @@
         <module name="Main" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="FieldInteractor" target="8" />
-    </bytecodeTargetLevel>
   </component>
 </project>
