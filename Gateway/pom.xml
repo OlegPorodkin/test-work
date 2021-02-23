@@ -40,6 +40,7 @@
     </dependencies>
 
     <build>
+        <finalName>${project.artifactId}</finalName>
         <plugins>
             <plugin>
                 <artifactId>maven-resources-plugin</artifactId>
@@ -53,7 +54,7 @@
                             <goal>resources</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>target/resources</outputDirectory>
+                            <outputDirectory>${basedir}/..</outputDirectory>
                             <resources>
                                 <resource>
                                     <directory>src/main/resources</directory>

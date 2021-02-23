@@ -3,4 +3,5 @@
 2.xml
 target
 .idea
+main-jar-with-dependencies.jar
 /XmlPresenter/1to2.xsl

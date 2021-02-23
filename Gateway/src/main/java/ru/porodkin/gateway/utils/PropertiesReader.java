@@ -1,5 +1,6 @@
 package ru.porodkin.gateway.utils;
 
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,7 +16,7 @@ public class PropertiesReader {
             Properties prop = new Properties();
             String propFileName = "application.properties";
 
-            inputStream = PropertiesReader.class.getClassLoader().getResourceAsStream(propFileName);
+            inputStream = new FileInputStream(propFileName);
 
             if (inputStream != null) {
                 prop.load(inputStream);

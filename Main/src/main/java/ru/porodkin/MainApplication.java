@@ -34,10 +34,10 @@ public class MainApplication {
 
         int count = 1_000_000;
 
-        if (args[0] != null) {
+        if (args.length != 0 && args[0] != null) {
             count = Integer.parseInt(args[0]);
         } else {
-            if (LOG.isDebugEnabled()) LOG.debug("uses the default value of the quantity entry to write to the database");
+            LOG.info("uses the default value of the quantity entry to write to the database");
         }
 
         for (int i = 1; i <= count; i++) {
